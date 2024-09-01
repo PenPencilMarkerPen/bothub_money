@@ -3,6 +3,8 @@ FROM php:8.2-cli
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     libicu-dev \
+    git \
+    unzip \
     && docker-php-ext-install \
     pgsql \
     bcmath \
