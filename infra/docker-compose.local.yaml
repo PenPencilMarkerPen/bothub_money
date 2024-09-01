@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  app:
+    container_name: bothub
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile
+    command: bash -c "php app/createTable.php && php -S 0.0.0.0:3000"
+    ports:
+      - 5000:3000
+    depends_on:
+      - postgres
+
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    restart: always
+    env_file: ../.env
+    environment:
+      POSTGRES_PASSWORD: ${DB_POSTGRES_PASSWORD}
+      POSTGRES_USER: ${DB_POSTGRES_USERNAME}
+      POSTGRES_DB: ${DB_POSTGRES_NAME}
+    ports:
+      - "${DB_POSTGRES_PORT}:5432"
